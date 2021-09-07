@@ -1,33 +1,53 @@
 public class Wizard{
+    static final String alignments = "gGEe";
     private String name;
     private String element;
     private int powerLevel;
-    private boolean evil;
+    private char alignment;
 
-    public Wizard(String name, String element, int powerLevel, boolean evil){
+    /**
+     * Creates a Wizard
+     * @param name       the name of the wizard
+     * @param element    the wizard's matsered (preferred) element
+     * @param powerLevel an int value representing the Wizard's power
+     * @param alignment  a character representing the Wizard's (moral) alignment, g for good or e for evil
+     */
+    public Wizard(String name, String element, int powerLevel, char alignment){
         setName(name);
         setElement(element);
         setPowerLevel(powerLevel);
-        setAlignment(evil);
+        setAlignment(alignment);
     }
 
+    /**
+     * Get the Wizard's name
+     * @return a String of the Wizard's name
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Set the Wizard's name
+     * @param name a String of at least 2 characters to be the Wizard's name
+     */
     public void setName(String name){
         if(name.length() < 2)
             throw new IllegalArgumentException("A wizard's name must be at least 2 characters long.");
         this.name = name;
     }
 
+    /**
+     * Get the Wizard's element
+     * @return a String of the element's name
+     */
     public String getElement(){
         return element;
     }
 
     /**
      * Set the Wizard's (preferred) element
-     * @param element
+     * @param element the element's name, which must be at least 3 characters long
      */
     public void setElement(String element){
         if(element.length() < 3)
@@ -58,15 +78,17 @@ public class Wizard{
      * @return aString of good or evil
      */
     public String getAlignment(){
-        return evil ? "evil" : "good";
+        return alignments.indexOf(alignment) > 1 ? "evil" : "good";
     }
 
     /**
      * Sets the (moral) alignment of the Wizard
-     * @param evil a boolean if the Wizard is evil, true if the Wizard is evil and false if they are good
+     * @param alignment a boolean if the Wizard is evil, true if the Wizard is evil and false if they are good
      */
-    public void setAlignment(boolean evil){
-        this.evil = evil;
+    public void setAlignment(char alignment){
+        if(alignments.indexOf(alignment) == -1)
+            throw new IllegalArgumentException("A wizard's alignment must be good (g) or evil (e).");
+        this.alignment = alignment;
     }
 
     /**
@@ -75,7 +97,7 @@ public class Wizard{
      */
     @Override
     public String toString(){
-        String allegiance = evil ? "evil" : "good";
-        return String.format("%s the wizard, a master of %s at a power level of %d. One who uses their power for %s.",name,element,powerLevel,allegiance);
+        String allegiance = (alignment + "").equalsIgnoreCase("e") ? "evil" : "good";
+        return String.format("%s the wizard, a master of %s at a power level of %d. One who uses their power for %s.", name, element, powerLevel, allegiance);
     }
 }
